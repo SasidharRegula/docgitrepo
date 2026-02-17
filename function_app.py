@@ -14,7 +14,16 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 @app.route(route="githubrepodocs")
 def githubrepodocs(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
-
+    BLOB_CONN_STR=os.getenv("BLOB_CONN_STR") 
+    BLOB_CONTAINER_NAME=os.getenv("BLOB_CONTAINER_NAME")
+    DOC_INT_KEY=os.getenv("DOC_INT_KEY") 
+    DOC_INT_ENDPOINT=os.getenv("DOC_INT_ENDPOINT")
+    AZURE_API_ENDPOINT=os.getenv("AZURE_API_ENDPOINT")
+    AZURE_API_KEY=os.getenv("AZURE_API_KEY")
+    AZURE_API_VERSION=os.getenv("AZURE_API_VERSION") 
+    COSMOS_CONN_STR=os.getenv("COSMOS_CONN_STR") 
+    COSMOS_DB_NAME=os.getenv("COSMOS_DB_NAME") 
+    COSMOS_CONTAINER_NAME=os.getenv("COSMOS_CONTAINER_NAME")
     name = req.params.get('name')
     if not name:
         try:
