@@ -1,13 +1,7 @@
 import azure.functions as func
 import logging
 from openai import AzureOpenAI
-from azure.storage.blob import BlobServiceClient 
-from azure.ai.documentintelligence import DocumentIntelligenceClient 
-from azure.core.credentials import AzureKeyCredential
-import os,json,random
-from azure.cosmos import CosmosClient 
-from datetime import datetime
-from concurrent.futures import ThreadPoolExecutor
+
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 @app.route(route="githubrepodocs")
