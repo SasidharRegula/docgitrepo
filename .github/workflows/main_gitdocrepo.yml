@@ -72,6 +72,6 @@ jobs:
           app-name: 'gitdocrepo'
           slot-name: 'Production'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_14F46C0751D34D8DB93582B072FFCE63 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C5C4143E5A89490E8773B8485A52E1CA }}
           sku: 'flexconsumption'
         
