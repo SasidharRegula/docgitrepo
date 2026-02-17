@@ -35,9 +35,7 @@ jobs:
           source venv/bin/activate
 
       - name: Install dependencies
-        run: 
-          source venv/bin/activate
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
       # Optional: Add step to run tests here
 
@@ -74,7 +72,6 @@ jobs:
           app-name: 'gitdocrepo'
           slot-name: 'Production'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-
-          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE}}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F58359C7FA0C4880A25DE67D391D037B }}
           sku: 'flexconsumption'
         
