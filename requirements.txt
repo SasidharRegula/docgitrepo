@@ -3,7 +3,8 @@
 # azure-monitor-opentelemetry
 
 azure-functions
-openai
+openai>=1.30.0
 azure-storage-blob
 azure-ai-documentintelligence
 azure-cosmos
+azure-identity
