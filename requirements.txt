@@ -8,3 +8,4 @@ azure-storage-blob
 azure-ai-documentintelligence
 azure-cosmos
 azure-identity
+azure-core>=1.29.0
