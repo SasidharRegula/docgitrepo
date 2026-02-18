@@ -8,6 +8,7 @@ import os, json, random
 from azure.cosmos import CosmosClient 
 from datetime import datetime 
 from concurrent.futures import ThreadPoolExecutor
+from azure.identity import DefaultAzureCredential,get_bearer_token_provider 
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
@@ -23,7 +24,7 @@ def githubrepodocs(req: func.HttpRequest) -> func.HttpResponse:
             "DOC_INT_KEY": os.getenv("DOC_INT_KEY"),
             "DOC_INT_ENDPOINT": os.getenv("DOC_INT_ENDPOINT"),
             "AZURE_API_ENDPOINT": os.getenv("AZURE_API_ENDPOINT"),
-            "AZURE_API_KEY": os.getenv("AZURE_API_KEY"),
+            # "AZURE_API_KEY": os.getenv("AZURE_API_KEY"),
             "AZURE_API_VERSION": os.getenv("AZURE_API_VERSION"),
             "COSMOS_CONN_STR": os.getenv("COSMOS_CONN_STR"),
             "COSMOS_DB_NAME": os.getenv("COSMOS_DB_NAME"),
@@ -49,11 +50,22 @@ def githubrepodocs(req: func.HttpRequest) -> func.HttpResponse:
             endpoint=required_env_vars["DOC_INT_ENDPOINT"],
             credential=AzureKeyCredential(key=required_env_vars["DOC_INT_KEY"])
         ) 
-        
+        # Create Managed Identity credential
+        credential = DefaultAzureCredential()
+        # Token provider for Azure OpenAI
+        token_provider = get_bearer_token_provider(
+                        credential,
+                        "https://cognitiveservices.azure.com/.default"
+                        )
+        # aoai_client = AzureOpenAI(
+        #     azure_endpoint=required_env_vars["AZURE_API_ENDPOINT"],
+        #     api_key=required_env_vars["AZURE_API_KEY"],
+        #     api_version=required_env_vars["AZURE_API_VERSION"]
+        # ) 
         aoai_client = AzureOpenAI(
             azure_endpoint=required_env_vars["AZURE_API_ENDPOINT"],
-            api_key=required_env_vars["AZURE_API_KEY"],
-            api_version=required_env_vars["AZURE_API_VERSION"]
+            api_version=required_env_vars["AZURE_API_VERSION"],
+            azure_ad_token_provider=token_provider
         ) 
         
         cosmos_client = CosmosClient.from_connection_string(required_env_vars["COSMOS_CONN_STR"]) 
