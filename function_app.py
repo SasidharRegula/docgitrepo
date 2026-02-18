@@ -50,11 +50,11 @@ def githubrepodocs(req: func.HttpRequest) -> func.HttpResponse:
                         credential,
                         "https://cognitiveservices.azure.com/.default"
                         )
-        # blob_service = BlobServiceClient.from_connection_string(required_env_vars["BLOB_CONN_STR"]) 
-        blob_service=BlobServiceClient(
-            account_url="https://adibstorageblob.blob.core.windows.net",
-            credential=credential
-        )
+        blob_service = BlobServiceClient.from_connection_string(required_env_vars["BLOB_CONN_STR"]) 
+        # blob_service=BlobServiceClient(
+        #     account_url="https://adibstorageblob.blob.core.windows.net",
+        #     credential=credential
+        # )
         container_client = blob_service.get_container_client(required_env_vars["BLOB_CONTAINER_NAME"]) 
         
         # doc_int_client = DocumentIntelligenceClient(
@@ -77,11 +77,11 @@ def githubrepodocs(req: func.HttpRequest) -> func.HttpResponse:
             azure_ad_token_provider=token_provider
         ) 
         
-        # cosmos_client = CosmosClient.from_connection_string(required_env_vars["COSMOS_CONN_STR"])
-        cosmos_client=CosmosClient(
-            url=os.getenv("COSMOS_ENDPOINT"),
-            credential=credential
-        ) 
+        cosmos_client = CosmosClient.from_connection_string(required_env_vars["COSMOS_CONN_STR"])
+        # cosmos_client=CosmosClient(
+        #     url=os.getenv("COSMOS_ENDPOINT"),
+        #     credential=credential
+        # ) 
         database = cosmos_client.get_database_client(required_env_vars["COSMOS_DB_NAME"]) 
         container = database.get_container_client(required_env_vars["COSMOS_CONTAINER_NAME"]) 
         
