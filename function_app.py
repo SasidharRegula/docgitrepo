@@ -224,8 +224,7 @@ def githubrepodocs(req: func.HttpRequest) -> func.HttpResponse:
                 {"role": "system", "content": "You extract structured fraud investigation entities."},
                 {"role": "user", "content": prompt}
             ],
-            temperature=0,
-            max_tokens=400
+            temperature=0
         ) 
         
         raw_output = response.choices[0].message.content 
@@ -268,8 +267,7 @@ def githubrepodocs(req: func.HttpRequest) -> func.HttpResponse:
                 {"role": "system", "content": "You produce fraud investigation summaries."},
                 {"role": "user", "content": final_prompt}
             ],
-            temperature=0.2,
-            max_tokens=500
+            temperature=0.2
         ) 
         
         final_raw_output = final_response.choices[0].message.content.strip()  
