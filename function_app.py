@@ -118,7 +118,32 @@ def githubrepodocs(req: func.HttpRequest) -> func.HttpResponse:
                     overwrite=True
                 ) 
                 logging.info(f"[UPLOAD] Stored file -> {blob_path}") 
-        
+        #(Base64 upload)
+
+        try:
+            req_body = req.get_json()
+        except:
+            req_body = {}
+
+        if req_body:
+            file_name = req_body.get("fileName")
+            file_content = req_body.get("fileContent")
+
+        if file_content:
+            import base64
+            try:
+                file_bytes = base64.b64decode(file_content)
+
+                blob_path = f"{case_id}/{file_name}"
+                blob_client = container_client.get_blob_client(blob_path)
+                blob_client.upload_blob(file_bytes, overwrite=True)
+
+                logging.info(f"[UPLOAD-BASE64] Stored file -> {blob_path}")
+
+            except Exception as e:
+                logging.error(f"Base64 decode/upload failed: {str(e)}")
+
+            
         # Scan blob storage for existing files
         attachments = []
         logging.info(f"[BLOB SCAN] Scanning container '{required_env_vars['BLOB_CONTAINER_NAME']}' for prefix '{case_id}/'") 
