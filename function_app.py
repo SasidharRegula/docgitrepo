@@ -219,7 +219,7 @@ def githubrepodocs(req: func.HttpRequest) -> func.HttpResponse:
                     """ 
         
         response = aoai_client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-5.1",
             messages=[
                 {"role": "system", "content": "You extract structured fraud investigation entities."},
                 {"role": "user", "content": prompt}
@@ -263,7 +263,7 @@ def githubrepodocs(req: func.HttpRequest) -> func.HttpResponse:
                 """
         
         final_response = aoai_client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-5.1",
             messages=[
                 {"role": "system", "content": "You produce fraud investigation summaries."},
                 {"role": "user", "content": final_prompt}
