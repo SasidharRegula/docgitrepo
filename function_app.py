@@ -26,10 +26,10 @@ def githubrepodocs(req: func.HttpRequest) -> func.HttpResponse:
             "AZURE_API_ENDPOINT": os.getenv("AZURE_API_ENDPOINT"),
             # "AZURE_API_KEY": os.getenv("AZURE_API_KEY"),
             "AZURE_API_VERSION": os.getenv("AZURE_API_VERSION"),
-            "COSMOS_CONN_STR": os.getenv("COSMOS_CONN_STR"),
-            "COSMOS_DB_NAME": os.getenv("COSMOS_DB_NAME"),
-            "COSMOS_CONTAINER_NAME": os.getenv("COSMOS_CONTAINER_NAME"),
-            "COSMOS_ENDPOINT":os.getenv("COSMOS_ENDPOINT")
+            # "COSMOS_CONN_STR": os.getenv("COSMOS_CONN_STR"),
+            # "COSMOS_DB_NAME": os.getenv("COSMOS_DB_NAME"),
+            # "COSMOS_CONTAINER_NAME": os.getenv("COSMOS_CONTAINER_NAME"),
+            # "COSMOS_ENDPOINT":os.getenv("COSMOS_ENDPOINT")
         }
         
         # Check for missing environment variables
@@ -77,13 +77,10 @@ def githubrepodocs(req: func.HttpRequest) -> func.HttpResponse:
             azure_ad_token_provider=token_provider
         ) 
         
-        cosmos_client = CosmosClient.from_connection_string(required_env_vars["COSMOS_CONN_STR"])
-        # cosmos_client=CosmosClient(
-        #     url=os.getenv("COSMOS_ENDPOINT"),
-        #     credential=credential
-        # ) 
-        database = cosmos_client.get_database_client(required_env_vars["COSMOS_DB_NAME"]) 
-        container = database.get_container_client(required_env_vars["COSMOS_CONTAINER_NAME"]) 
+        # cosmos_client = CosmosClient.from_connection_string(required_env_vars["COSMOS_CONN_STR"])
+        
+        # database = cosmos_client.get_database_client(required_env_vars["COSMOS_DB_NAME"]) 
+        # container = database.get_container_client(required_env_vars["COSMOS_CONTAINER_NAME"]) 
         
         logging.info("All Azure clients initialized successfully")
         
@@ -279,19 +276,19 @@ def githubrepodocs(req: func.HttpRequest) -> func.HttpResponse:
         logging.info(f"Summary generated: {json.dumps(summary_json)}")
         
         # Store in Cosmos DB
-        logging.info("Storing results in Cosmos DB...")
-        doc_id = f"{case_id}-{random.randint(10, 99)}"
-        document = {
-            "id": doc_id,                      
-            "case_id": case_id,                 
-            "timestamp": datetime.utcnow().isoformat(),
-            "ocr_text": ocr_text,
-            "extracted_entities": cleaned_entities,
-            "summary_result": summary_json
-        }
+        # logging.info("Storing results in Cosmos DB...")
+        # doc_id = f"{case_id}-{random.randint(10, 99)}"
+        # document = {
+        #     "id": doc_id,                      
+        #     "case_id": case_id,                 
+        #     "timestamp": datetime.utcnow().isoformat(),
+        #     "ocr_text": ocr_text,
+        #     "extracted_entities": cleaned_entities,
+        #     "summary_result": summary_json
+        # }
         
-        container.upsert_item(document) 
-        logging.info(f"Document stored with id: {doc_id}")
+        # container.upsert_item(document) 
+        # logging.info(f"Document stored with id: {doc_id}")
         
         # Return success response
         return func.HttpResponse(
